@@ -14,6 +14,9 @@ public class MainView extends SurfaceView {
     private MainModel myModel;
     private Paint errorPaint;
     private Paint winPaint;
+    private Paint textPaint;
+
+
     //constructor to set values for instance variables
     public MainView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,8 +30,15 @@ public class MainView extends SurfaceView {
         errorPaint.setARGB(255,255,0,0);
         winPaint.setARGB(255,0,255,0);
         numPaint = new Paint(outlinePaint);
+        textPaint = new Paint(insidePaint);
         numPaint.setTextSize(90);
         numPaint.setFakeBoldText(true);
+        textPaint.setTextSize(50);
+        textPaint.setFakeBoldText(true);
+        errorPaint.setTextSize(90);
+        errorPaint.setFakeBoldText(true);
+        winPaint.setTextSize(180);
+        winPaint.setFakeBoldText(true);
         myModel = new MainModel();
 
     }
@@ -38,15 +48,14 @@ public class MainView extends SurfaceView {
     }
 
     protected void onDraw(Canvas canvas){
-        //if the they touched out of bounds - flash red
-        if(myModel.error){
-            canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(), errorPaint);
-
+        //if the they touched out of bounds - display on screen error
+        if(myModel.error && !myModel.win){
+            canvas.drawText("Error", canvas.getWidth() - 800, canvas.getHeight() - 500, errorPaint);
             myModel.error = false;
-
         }
+        //When you win display on screen You Win
         if(myModel.win){
-            canvas.drawRect(0,0,canvas.getWidth(), canvas.getHeight(), winPaint);
+            canvas.drawText("You Win!", canvas.getWidth() - 800, canvas.getHeight() - 800, winPaint);
 
         }
         //This nested for loop will create the board
@@ -66,6 +75,8 @@ public class MainView extends SurfaceView {
 
             }
         }
+        //Displays for the user the current board size in the bottom left corner
+        canvas.drawText(("The current board is a " + myModel.boardSize +"x" + myModel.boardSize), canvas.getWidth() - 800, canvas.getHeight() - 50, textPaint );
 
 
     }

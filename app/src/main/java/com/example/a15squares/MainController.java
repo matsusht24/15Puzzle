@@ -3,6 +3,7 @@ package com.example.a15squares;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
         myView = tempView;
         myModel = myView.getMyModel();
         rand = new Random();
+
 
     }
     //this function will randomize the numbers and assign them position values.
@@ -34,7 +36,7 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
                     pos = rand.nextInt(myModel.totalBoxes);
 
                 }
-                Numbers temp = new Numbers(posNum[pos], (j* myModel.outerSquareSize + 30), ((i+1)* myModel.outerSquareSize - 30 ), i-1, j-1);
+                Numbers temp = new Numbers(posNum[pos], (j* myModel.outerSquareSize + 12), ((i+1)* myModel.outerSquareSize - 25 ), i-1, j-1);
                 myModel.numberArray[i-1][j-1] = temp;
                 posNum[pos] = 0;
             }
@@ -134,15 +136,23 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
         //when Size+ button is pressed, it will increase boardSize and reset game;
         } else if(view.getId() == R.id.increaseButton && myModel.boardSize < myModel.maxBoardSize){
             myModel.boardSize++;
-            myModel.win = false;
-            randomizer();
+            updateModel();
+
         //when Size- button is pressed, it will decrease boardSize and reset game;
         } else if(view.getId() == R.id.decreaseButton && myModel.boardSize > myModel.minBoardSize){
             myModel.boardSize--;
-            myModel.win = false;
-            randomizer();
+            updateModel();
         }
 
 
+    }
+
+    //helper method to update the model
+    public void updateModel(){
+        myModel.win = false;
+        myModel.totalBoxes = myModel.boardSize*myModel.boardSize;
+        myModel.totalBoardSize = myModel.outerSquareSize*(myModel.boardSize+1);
+        myModel.numberArray = new Numbers[myModel.boardSize][myModel.boardSize];
+        randomizer();
     }
 }

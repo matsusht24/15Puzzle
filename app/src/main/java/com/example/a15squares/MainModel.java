@@ -3,9 +3,9 @@ package com.example.a15squares;
 public class MainModel {
     //variables that will be called by either controller or view
     public int boardSize = 4;
-    public int maxBoardSize = 10;
+    public int maxBoardSize = 9;
     public int minBoardSize = 2;
-    public int outerSquareSize = 150;
+    public int outerSquareSize = 125;
     public int totalBoxes = boardSize*boardSize;
     public Numbers[][] numberArray = new Numbers[boardSize][boardSize];
     public float pressX = 0;
